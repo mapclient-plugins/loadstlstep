@@ -25,6 +25,9 @@ class LoadSTLStep(WorkflowStepMountPoint):
         # Add any other initialisation code here:
         # Ports:
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#uses',
+                      'String'))
+        self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
                       'ju#pointcoordinates'))
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
@@ -34,6 +37,7 @@ class LoadSTLStep(WorkflowStepMountPoint):
         self._config['identifier'] = ''
         self._config['Filename'] = '.stl'
 
+        self._filename = None
         self._V = None
         self._T = None
 
@@ -45,12 +49,21 @@ class LoadSTLStep(WorkflowStepMountPoint):
         may be connected up to a button in a widget for example.
         '''
         # Put your execute step code here before calling the '_doneExecution' method.
+        if self._filename == None:
+            filename = self._config['Filename']
+        else:
+            filename = self._filename
+
         S = stlreader.STL()
-        S.setFilename(self._config['Filename'])
+        S.setFilename(filename)
         S.load()
         self._V = S.points
         self._T = S.triangles
         self._doneExecution()
+
+    def setPortData(self, index, dataIn):
+        if index==0:
+            self._filename = dataIn
 
     def getPortData(self, index):
         '''
@@ -58,9 +71,9 @@ class LoadSTLStep(WorkflowStepMountPoint):
         The index is the index of the port in the port list.  If there is only one
         provides port for this step then the index can be ignored.
         '''
-        if index == 0:
+        if index == 1:
             return self._V
-        elif index == 1:
+        elif index == 2:
             return self._T
 
     def configure(self):
