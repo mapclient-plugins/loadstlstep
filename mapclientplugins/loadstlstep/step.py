@@ -30,7 +30,7 @@ class LoadSTLStep(WorkflowStepMountPoint):
                       'python#string'))
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
-                      'http://physiomeproject.org/workflow/1.0/rdf-schema#pointcoordinates'))
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#pointcloud'))
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
                       'numpy#array3d'))
