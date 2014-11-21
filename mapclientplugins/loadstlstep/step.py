@@ -11,6 +11,7 @@ from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.loadstlstep.configuredialog import ConfigureDialog
 
 from gias.common import stlreader
+import numpy as np
 
 class LoadSTLStep(WorkflowStepMountPoint):
     '''
@@ -26,13 +27,13 @@ class LoadSTLStep(WorkflowStepMountPoint):
         # Ports:
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#uses',
-                      'String'))
+                      'python#string'))
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
-                      'ju#pointcoordinates'))
+                      'http://physiomeproject.org/workflow/1.0/rdf-schema#pointcoordinates'))
         self.addPort(('http://physiomeproject.org/workflow/1.0/rdf-schema#port',
                       'http://physiomeproject.org/workflow/1.0/rdf-schema#provides',
-                      'ju#triangletuples'))
+                      'numpy#array3d'))
         self._config = {}
         self._config['identifier'] = ''
         self._config['Filename'] = '.stl'
