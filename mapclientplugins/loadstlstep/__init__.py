@@ -19,4 +19,7 @@ This file is part of MAP Client. (http://launchpad.net/mapclient)
 """
 __version__ = '0.1.0'
 __author__ = 'Ju Zhang'
+__stepname__ = 'Load STL'
+__location__ = 'https://github.com/mapclient-plugins/loadstlstep/archive/master.zip'
+
 from mapclientplugins.loadstlstep import step
