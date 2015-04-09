@@ -96,6 +96,7 @@ class ConfigureDialog(QtGui.QDialog):
         identifier over the whole of the workflow.
         '''
         self._previousIdentifier = config['identifier']
+        self._previousFileLoc = config['Filename']
         self._ui.idLineEdit.setText(config['identifier'])
         self._ui.fileLocLineEdit.setText(config['Filename'])
 
