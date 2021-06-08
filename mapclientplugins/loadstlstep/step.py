@@ -18,10 +18,8 @@ This file is part of MAP Client. (http://launchpad.net/mapclient)
     along with MAP Client.  If not, see <http://www.gnu.org/licenses/>..
 """
 
-import os
 import json
 
-from PySide import QtGui
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.loadstlstep.configuredialog import ConfigureDialog
