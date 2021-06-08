@@ -20,12 +20,12 @@ This file is part of MAP Client. (http://launchpad.net/mapclient)
 
 import json
 
-
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.loadstlstep.configuredialog import ConfigureDialog
 
 from gias.common import stlreader
 import numpy as np
+
 
 class LoadSTLStep(WorkflowStepMountPoint):
     '''
@@ -35,7 +35,7 @@ class LoadSTLStep(WorkflowStepMountPoint):
 
     def __init__(self, location):
         super(LoadSTLStep, self).__init__('Load STL', location)
-        self._configured = False # A step cannot be executed until it has been configured.
+        self._configured = False  # A step cannot be executed until it has been configured.
         self._category = 'Source'
         # Add any other initialisation code here:
         # Ports:
@@ -55,7 +55,6 @@ class LoadSTLStep(WorkflowStepMountPoint):
         self._filename = None
         self._V = None
         self._T = None
-
 
     def execute(self):
         '''
@@ -77,7 +76,7 @@ class LoadSTLStep(WorkflowStepMountPoint):
         self._doneExecution()
 
     def setPortData(self, index, dataIn):
-        if index==0:
+        if index == 0:
             self._filename = dataIn
 
     def getPortData(self, index):
@@ -104,10 +103,10 @@ class LoadSTLStep(WorkflowStepMountPoint):
         dlg.setConfig(self._config)
         dlg.validate()
         dlg.setModal(True)
-        
+
         if dlg.exec_():
             self._config = dlg.getConfig()
-        
+
         self._configured = dlg.validate()
         self._configuredObserver()
 
@@ -141,5 +140,3 @@ class LoadSTLStep(WorkflowStepMountPoint):
         d.identifierOccursCount = self._identifierOccursCount
         d.setConfig(self._config)
         self._configured = d.validate()
-
-
