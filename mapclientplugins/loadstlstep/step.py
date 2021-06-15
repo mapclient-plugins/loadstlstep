@@ -18,16 +18,13 @@ This file is part of MAP Client. (http://launchpad.net/mapclient)
     along with MAP Client.  If not, see <http://www.gnu.org/licenses/>..
 """
 
-import os
 import json
-
-from PySide import QtGui
 
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.loadstlstep.configuredialog import ConfigureDialog
 
-from gias.common import stlreader
-import numpy as np
+from gias2.mesh import simplemesh
+
 
 class LoadSTLStep(WorkflowStepMountPoint):
     '''
@@ -37,7 +34,7 @@ class LoadSTLStep(WorkflowStepMountPoint):
 
     def __init__(self, location):
         super(LoadSTLStep, self).__init__('Load STL', location)
-        self._configured = False # A step cannot be executed until it has been configured.
+        self._configured = False  # A step cannot be executed until it has been configured.
         self._category = 'Source'
         # Add any other initialisation code here:
         # Ports:
@@ -58,7 +55,6 @@ class LoadSTLStep(WorkflowStepMountPoint):
         self._V = None
         self._T = None
 
-
     def execute(self):
         '''
         Add your code here that will kick off the execution of the step.
@@ -71,15 +67,15 @@ class LoadSTLStep(WorkflowStepMountPoint):
         else:
             filename = self._filename
 
-        S = stlreader.STL()
-        S.setFilename(filename)
-        S.load()
-        self._V = S.points
-        self._T = S.triangles
+        #S = stlreader.STL()
+        S = simplemesh.stl_2_simple_mesh(filename)
+        s = S[int(self._config['model index'])]
+        self._V = s.v.copy()
+        self._T = s.f.copy()
         self._doneExecution()
 
     def setPortData(self, index, dataIn):
-        if index==0:
+        if index == 0:
             self._filename = dataIn
 
     def getPortData(self, index):
@@ -101,15 +97,15 @@ class LoadSTLStep(WorkflowStepMountPoint):
         then set:
             self._configured = True
         '''
-        dlg = ConfigureDialog()
+        dlg = ConfigureDialog(self._main_window)
         dlg.identifierOccursCount = self._identifierOccursCount
         dlg.setConfig(self._config)
         dlg.validate()
         dlg.setModal(True)
-        
+
         if dlg.exec_():
             self._config = dlg.getConfig()
-        
+
         self._configured = dlg.validate()
         self._configuredObserver()
 
@@ -143,5 +139,3 @@ class LoadSTLStep(WorkflowStepMountPoint):
         d.identifierOccursCount = self._identifierOccursCount
         d.setConfig(self._config)
         self._configured = d.validate()
-
-
