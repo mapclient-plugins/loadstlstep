@@ -23,7 +23,6 @@ import json
 from mapclient.mountpoints.workflowstep import WorkflowStepMountPoint
 from mapclientplugins.loadstlstep.configuredialog import ConfigureDialog
 
-#from gias.common import stlreader
 from gias2.mesh import simplemesh
 
 
@@ -74,12 +73,6 @@ class LoadSTLStep(WorkflowStepMountPoint):
         self._V = s.v.copy()
         self._T = s.f.copy()
         self._doneExecution()
-
-        # S.setFilename(filename)
-        # S.load()
-        # self._V = S.points
-        # self._T = S.triangles
-        # self._doneExecution()
 
     def setPortData(self, index, dataIn):
         if index == 0:
